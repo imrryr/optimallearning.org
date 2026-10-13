@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import { load } from 'cheerio';
 import GithubSlugger from 'github-slugger';
+import { icon, navigation } from './navigation.mjs';
 
 const toolDir = dirname(fileURLToPath(import.meta.url));
 const siteDir = resolve(toolDir, '../..');
@@ -156,8 +157,7 @@ for (const [page, doc] of rendered) {
   const introduction = doc.$('p').toArray().map(el => doc.$(el).text().replace(/\s+/g, ' ').trim()).find(s => s.length > 70 && !s.startsWith('Last Updated:'));
   const description = searchMetadata[page]?.description || (introduction ? [...sentences.segment(introduction)][0].segment.trim() : `${title} — MoFaCTS documentation.`);
   const nav = load(sidebar.$.html(), null, false);
-  nav('[id]').removeAttr('id');
-  nav('a[href]').each((_, el) => { if (nav(el).attr('href') === htmlPath(page)) nav(el).attr('aria-current', 'page'); });
+  const navigationHtml = navigation(nav, htmlPath(page), escape);
   const canonical = origin + htmlPath(page);
   const titleElement = doc.$('h1').first();
   const pageTitle = titleElement.length ? titleElement.toString() : `<h1>${escape(title)}</h1>`;
@@ -166,14 +166,15 @@ for (const [page, doc] of rendered) {
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(searchTitle)} | Optimal Learning Lab</title><meta name="description" content="${escape(description)}">
 <link rel="canonical" href="${canonical}"><meta property="og:title" content="${escape(searchTitle)}"><meta property="og:description" content="${escape(description)}"><meta property="og:type" content="article"><meta property="og:url" content="${canonical}">
-${sharedHead}<link rel="stylesheet" href="/wiki/wiki.css"></head>
+${sharedHead}<link rel="stylesheet" href="/wiki/wiki.css"><script src="/wiki/wiki-navigation.js" defer></script></head>
 <body><a class="wiki-skip-link" href="#wiki-content">Skip to documentation</a><div class="site-shell">${header}
-<main class="wiki-layout"><aside class="wiki-sidebar"><details open><summary>MoFaCTS documentation</summary><nav aria-label="Documentation">${nav.html()}</nav></details></aside>
+<main class="wiki-layout wiki-shell"><aside class="wiki-sidebar" aria-label="Documentation sidebar"><div class="wiki-sidebar-header"><span class="wiki-sidebar-brand">MoFaCTS <small>Documentation</small></span><button class="wiki-sidebar-toggle" type="button" aria-controls="wiki-navigation" aria-expanded="false" aria-label="Expand documentation sidebar" title="Expand sidebar">${icon('panel')}</button></div><nav id="wiki-navigation" aria-label="Documentation">${navigationHtml}</nav></aside>
 <article class="wiki-article" id="wiki-content">${pageTitle}<div class="wiki-page-meta"><a href="/wiki/">Documentation home</a><a href="${wikiUrl}/${encodeURIComponent(page.slice(0, -3))}">View source on GitHub</a></div>
 ${doc.$.html()}</article></main>${footer}</div></body></html>\n`);
 }
 for (const asset of assetUsage) write('wiki/' + asset, source(asset));
 write('wiki/wiki.css', readFileSync(join(toolDir, 'wiki.css')));
+write('wiki/wiki-navigation.js', readFileSync(join(toolDir, 'wiki-navigation.js')));
 const rootPages = readdirSync(siteDir).filter(name => name.endsWith('.html'));
 for (const page of rootPages) write(page, readFileSync(join(siteDir, page)));
 for (const folder of ['_frame', '_fonts', '_media']) cpSync(join(siteDir, folder), join(outDir, folder), { recursive: true });

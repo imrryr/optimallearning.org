@@ -5,6 +5,7 @@ import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'nod
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { load } from 'cheerio';
+import { navigation } from '../navigation.mjs';
 
 const tool = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const base = resolve(tool, '../../.build');
@@ -35,6 +36,17 @@ test('Publishes committed content with website links and stable duplicate headin
   assert.equal($('link[rel="canonical"]').attr('href'), 'https://optimallearning.org/wiki/');
   assert(!html.includes('Uncommitted text'));
   execFileSync(process.execPath, [join(tool, 'verify.mjs'), f.out], { stdio: 'pipe' });
+  writeFileSync(join(f.out, 'wiki/index.html'), html.replace('</head>', '<script src="/unapproved.js"></script></head>'));
+  assert.throws(() => execFileSync(process.execPath, [join(tool, 'verify.mjs'), f.out], { stdio: 'pipe' }), error => error.stderr.toString().includes('unexpected active content'));
+});
+
+test('Sidebar preserves source links and groups while identifying the current page', () => {
+  const source = load('<h2><a href="/wiki/">Home</a></h2><hr><h2>For Developers</h2><p><strong>Reference</strong></p><ul><li><a href="/wiki/TutorScript.html">TutorScript</a></li><li><a href="https://github.com/example">Source</a></li></ul>', null, false);
+  const result = load(navigation(source, '/wiki/TutorScript.html', value => value), null, false);
+  assert.deepEqual(result('a').map((_, el) => result(el).attr('href')).get(), ['/wiki/', '/wiki/TutorScript.html', 'https://github.com/example']);
+  assert.equal(result('a[aria-current="page"]').text(), 'TutorScript');
+  assert.equal(result('details[open] > summary').attr('aria-label'), 'Developers');
+  assert.equal(result('.wiki-nav-links strong').text(), 'Reference');
 });
 test('Rejects missing wiki targets before writing published pages', t => {
   const f = fixture(t, '# Home\n\n[Broken](Missing-page)');

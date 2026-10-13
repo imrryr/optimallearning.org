@@ -17,11 +17,13 @@ for (const name of files) {
   idsByPath.set(path, new Set(ids));
   if ($('h1').length !== 1) errors.push(`${name}: expected one h1`);
   if ($('link[rel="canonical"]').length !== 1) errors.push(`${name}: expected one canonical URL`);
-  if ($('script,iframe,object,embed').length) errors.push(`${name}: unexpected active content`);
+  if ($('iframe,object,embed').length) errors.push(`${name}: unexpected active content`);
+  const scripts = $('script');
+  if (scripts.length !== 1 || scripts.attr('src') !== '/wiki/wiki-navigation.js' || scripts.text().trim() || Object.keys(scripts.get(0)?.attribs || {}).some(key => !['src', 'defer'].includes(key))) errors.push(`${name}: unexpected active content`);
 }
 for (const name of files) {
   const $ = load(readFileSync(join(out, 'wiki', name), 'utf8'));
-  $('a[href],img[src],link[href]').each((_, el) => {
+  $('a[href],img[src],link[href],script[src]').each((_, el) => {
     const raw = $(el).attr('href') || $(el).attr('src');
     const url = new URL(raw, `https://optimallearning.org/wiki/${name}`);
     if (url.origin !== 'https://optimallearning.org') return;

@@ -4,6 +4,12 @@ The MoFaCTS GitHub wiki remains the editable source. The publisher builds ordina
 HTML documentation under `/wiki/` inside the existing Optimal Learning website.
 The website header, navigation, fonts and footer come from `links.html`; its shared
 stylesheet remains `_frame/site-refresh.css`. `wiki.css` adds documentation layout.
+Below the shared site header and menu, documentation navigation defaults to a compact
+icon rail. The sidebar toggle expands labeled sections and resizes only the article
+area, without covering it. Section icons also expand their link group. Section order
+and links come from `_Sidebar.md`; `navigation.mjs` supplies website labels and SVG
+icons. `wiki-navigation.js` owns the toggle and Escape behavior. Articles and links
+remain generated HTML. Reduced-motion preferences disable the width animation.
 
 ## Publishing contract
 
