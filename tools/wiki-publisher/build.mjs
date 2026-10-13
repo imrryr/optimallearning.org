@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, extname, isAbsolute, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -164,7 +165,8 @@ for (const [page, doc] of rendered) {
     if (bytes.length < 24 || !bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) throw new Error(`${page}: sharing image must be PNG`);
     const width = bytes.readUInt32BE(16), height = bytes.readUInt32BE(20);
     if (width < 1200 || height < 627 || bytes.length > 5_000_000) throw new Error(`${page}: sharing image must be at least 1200 by 627 pixels and under 5 MB`);
-    const imagePath = `wiki/social/${image.file}`;
+    const imageHash = createHash('sha256').update(bytes).digest('hex').slice(0, 12);
+    const imagePath = `wiki/social/${image.file.slice(0, -4)}-${imageHash}.png`;
     write(imagePath, bytes);
     imageTags = `<meta property="og:image" content="${origin}/${imagePath}"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="${width}"><meta property="og:image:height" content="${height}"><meta property="og:image:alt" content="${escape(image.alt)}">`;
   }

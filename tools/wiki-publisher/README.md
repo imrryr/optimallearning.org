@@ -29,7 +29,9 @@ remain generated HTML. Reduced-motion preferences disable the width animation.
   from the sitemap, while remaining available at their existing addresses.
 - Optional `image` metadata supplies a website-owned sharing PNG and accessible
   description. Files live in `social/` and publish under `/wiki/social/`. The build
-  reads dimensions from the PNG, checks LinkedIn's size limits, and emits Open Graph
+  includes a content hash in the published filename so revised artwork receives
+  a new image URL without changing the article's URL or hand-editing version numbers.
+  It reads dimensions from the PNG, checks LinkedIn's size limits, and emits Open Graph
   image tags. Link verification checks the asset; live delivery checks its bytes.
 - Check internal links and images before publishing. A failed build must not
   update the live site's publication marker.

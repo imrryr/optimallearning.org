@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
@@ -71,8 +72,12 @@ test('Preserves complete search descriptions and excludes non-indexable sitemap 
   const tutor = load(readFileSync(join(f.out, 'wiki/Introduction-to-TutorScript.html'), 'utf8'));
   assert.equal(tutor('h1').text(), 'Introduction to TutorScript');
   assert.equal(tutor('title').text(), 'TutorScript: Production Rules for Intelligent Tutoring | Optimal Learning Lab');
-  assert.equal(tutor('meta[property="og:image"]').attr('content'), 'https://optimallearning.org/wiki/social/tutorscript-share.png');
-  const image = readFileSync(join(f.out, 'wiki/social/tutorscript-share.png'));
+  const imageUrl = new URL(tutor('meta[property="og:image"]').attr('content'));
+  assert.equal(imageUrl.origin, 'https://optimallearning.org');
+  const image = readFileSync(join(f.out, imageUrl.pathname));
+  const imageHash = createHash('sha256').update(image).digest('hex').slice(0, 12);
+  assert.equal(imageUrl.pathname, `/wiki/social/tutorscript-share-${imageHash}.png`);
+  assert.deepEqual(image, readFileSync(join(tool, 'social/tutorscript-share.png')));
   assert.equal(image.readUInt32BE(16), 1200);
   assert.equal(image.readUInt32BE(20), 627);
   assert.equal(tutor('meta[property="og:image:width"]').attr('content'), '1200');
