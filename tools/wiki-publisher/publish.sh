@@ -17,10 +17,10 @@ fi
 # Only this generated prefix can be pruned. Object versions remain recoverable.
 # Publish the revision marker last, after all content and metadata have succeeded.
 aws s3 sync "$artifact/wiki/" "s3://$bucket/wiki/" --region "$region" --delete --exclude publication.json --cache-control 'public,max-age=300' --only-show-errors
-for file in sitemap.xml robots.txt links.html _frame/site-refresh.css _frame/favicon-network.svg; do
+for file in sitemap.xml robots.txt index.html links.html _frame/site-refresh.css _frame/favicon-network.svg; do
   aws s3 cp "$artifact/$file" "s3://$bucket/$file" --region "$region" --cache-control 'public,max-age=300' --only-show-errors
 done
-invalidation=$(aws cloudfront create-invalidation --distribution-id "$distribution" --paths '/wiki/*' '/sitemap.xml' '/robots.txt' '/links.html' '/_frame/site-refresh.css' '/_frame/favicon-network.svg*' --query Invalidation.Id --output text)
+invalidation=$(aws cloudfront create-invalidation --distribution-id "$distribution" --paths '/wiki/*' '/sitemap.xml' '/robots.txt' '/' '/index.html' '/links.html' '/_frame/site-refresh.css' '/_frame/favicon-network.svg*' --query Invalidation.Id --output text)
 aws cloudfront wait invalidation-completed --distribution-id "$distribution" --id "$invalidation"
 node tools/wiki-publisher/verify-live.mjs "$artifact" --content-only
 aws s3 cp "$artifact/wiki/publication.json" "s3://$bucket/wiki/publication.json" --region "$region" --content-type application/json --cache-control 'no-cache,max-age=0' --only-show-errors

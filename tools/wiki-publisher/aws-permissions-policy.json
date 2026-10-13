@@ -27,6 +27,7 @@
       "Resource": [
         "arn:aws:s3:::optimallearning.org/sitemap.xml",
         "arn:aws:s3:::optimallearning.org/robots.txt",
+        "arn:aws:s3:::optimallearning.org/index.html",
         "arn:aws:s3:::optimallearning.org/links.html",
         "arn:aws:s3:::optimallearning.org/_frame/site-refresh.css",
         "arn:aws:s3:::optimallearning.org/_frame/favicon-network.svg"

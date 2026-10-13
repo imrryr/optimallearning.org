@@ -147,9 +147,14 @@ const header = shell('header.site-header').toString();
 const footer = shell('footer.site-footer').toString();
 if (!header || !footer) throw new Error('The website shell must have site-header and site-footer elements.');
 const sharedHead = shell('head link[rel="stylesheet"], head link[rel="preconnect"], head link[rel="icon"]').toString();
+// Website search presentation is separate from the wiki's visible article headings.
+const searchMetadata = JSON.parse(readFileSync(join(toolDir, 'search-metadata.json'), 'utf8'));
+const sentences = new Intl.Segmenter('en', { granularity: 'sentence' });
 for (const [page, doc] of rendered) {
   const title = doc.headings[0]?.title || page.slice(0, -3).replaceAll('-', ' ');
-  const description = doc.$('p').toArray().map(el => doc.$(el).text().trim()).find(s => s.length > 70 && !s.startsWith('Last Updated:'))?.slice(0, 180) || `${title} — MoFaCTS documentation.`;
+  const searchTitle = searchMetadata[page]?.title || title;
+  const introduction = doc.$('p').toArray().map(el => doc.$(el).text().replace(/\s+/g, ' ').trim()).find(s => s.length > 70 && !s.startsWith('Last Updated:'));
+  const description = searchMetadata[page]?.description || (introduction ? [...sentences.segment(introduction)][0].segment.trim() : `${title} — MoFaCTS documentation.`);
   const nav = load(sidebar.$.html(), null, false);
   nav('[id]').removeAttr('id');
   nav('a[href]').each((_, el) => { if (nav(el).attr('href') === htmlPath(page)) nav(el).attr('aria-current', 'page'); });
@@ -159,8 +164,8 @@ for (const [page, doc] of rendered) {
   titleElement.remove();
   write(outputPath(page), `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${escape(title)} | Optimal Learning Lab</title><meta name="description" content="${escape(description)}">
-<link rel="canonical" href="${canonical}"><meta property="og:title" content="${escape(title)}"><meta property="og:type" content="article"><meta property="og:url" content="${canonical}">
+<title>${escape(searchTitle)} | Optimal Learning Lab</title><meta name="description" content="${escape(description)}">
+<link rel="canonical" href="${canonical}"><meta property="og:title" content="${escape(searchTitle)}"><meta property="og:description" content="${escape(description)}"><meta property="og:type" content="article"><meta property="og:url" content="${canonical}">
 ${sharedHead}<link rel="stylesheet" href="/wiki/wiki.css"></head>
 <body><a class="wiki-skip-link" href="#wiki-content">Skip to documentation</a><div class="site-shell">${header}
 <main class="wiki-layout"><aside class="wiki-sidebar"><details open><summary>MoFaCTS documentation</summary><nav aria-label="Documentation">${nav.html()}</nav></details></aside>
@@ -172,7 +177,12 @@ write('wiki/wiki.css', readFileSync(join(toolDir, 'wiki.css')));
 const rootPages = readdirSync(siteDir).filter(name => name.endsWith('.html'));
 for (const page of rootPages) write(page, readFileSync(join(siteDir, page)));
 for (const folder of ['_frame', '_fonts', '_media']) cpSync(join(siteDir, folder), join(outDir, folder), { recursive: true });
-const urls = [...rootPages.map(p => origin + '/' + p), ...pages.map(p => origin + htmlPath(p))].sort();
+const indexableRootPages = rootPages.filter(page => {
+  const $ = load(readFileSync(join(siteDir, page), 'utf8'));
+  const robots = $('meta[name="robots"]').attr('content') || '';
+  return !/\b(noindex|none)\b/i.test(robots) && !$('meta[http-equiv="refresh"]').length;
+});
+const urls = [...indexableRootPages.map(p => origin + '/' + p), ...pages.map(p => origin + htmlPath(p))].sort();
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(url => `  <url><loc>${escape(url)}</loc></url>`).join('\n')}\n</urlset>\n`);
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`);
 const manifest = { source: wikiUrl, sourceRevision: revision, publisherRevision: option('--publisher-revision', 'local-preview'), pages: pages.length, diagrams: diagramCount, assets: [...assetUsage].sort() };

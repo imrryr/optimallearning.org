@@ -1,0 +1,14 @@
+{
+  "Home.md": {
+    "title": "MoFaCTS Documentation: Adaptive Learning and Intelligent Tutoring",
+    "description": "Explore MoFaCTS documentation for students, teachers, researchers, and developers: adaptive practice, TutorScript production rules, and AutoTutor instruction."
+  },
+  "Introduction-to-TutorScript.md": {
+    "title": "TutorScript: Production Rules for Intelligent Tutoring",
+    "description": "TutorScript defines instructional production rules for MoFaCTS and AutoTutor. Explore evaluation, student choice, move selection, and worked examples."
+  },
+  "AutoTutor-Prompt-Production-Rule.md": {
+    "title": "TutorScript Production Rule Example: Explanation, Figure, and Question",
+    "description": "Follow a TutorScript instructional production from plain-English pseudocode to annotated JSON, connecting teaching decisions to an explanation, rich support, and question."
+  }
+}

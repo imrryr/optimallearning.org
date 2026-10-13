@@ -44,3 +44,22 @@ test('Rejects active HTML and executable URLs', t => {
   const f = fixture(t, '# Home\n\n<script>alert(1)</script>\n\n[Execute](javascript:alert%281%29)');
   assert.throws(() => build(f), error => error.stderr.toString().includes('unsupported URL'));
 });
+
+test('Preserves complete search descriptions and excludes non-indexable sitemap entries', t => {
+  const f = fixture(t, '# Home\n\nDocumentation.');
+  const sentence = 'This instructional example explains how the selected target, evaluated learner response, and available assistance determine which production can generate a useful next question for the learner.';
+  writeFileSync(join(f.wiki, 'Other-page.md'), `# Other page\n\n${sentence} A separate sentence follows.\n\n## Shared heading\n\n## Shared heading\n`);
+  writeFileSync(join(f.wiki, 'Introduction-to-TutorScript.md'), '# Introduction to TutorScript\n\nTutorScript describes instructional productions.');
+  execFileSync('git', ['-C', f.wiki, 'add', '.']);
+  execFileSync('git', ['-C', f.wiki, 'commit', '-m', 'Metadata fixture'], { stdio: 'pipe' });
+  build(f);
+  const other = load(readFileSync(join(f.out, 'wiki/Other-page.html'), 'utf8'));
+  assert.equal(other('meta[name="description"]').attr('content'), sentence);
+  assert.equal(other('meta[property="og:description"]').attr('content'), sentence);
+  const tutor = load(readFileSync(join(f.out, 'wiki/Introduction-to-TutorScript.html'), 'utf8'));
+  assert.equal(tutor('h1').text(), 'Introduction to TutorScript');
+  assert.equal(tutor('title').text(), 'TutorScript: Production Rules for Intelligent Tutoring | Optimal Learning Lab');
+  const sitemap = readFileSync(join(f.out, 'sitemap.xml'), 'utf8');
+  assert(!sitemap.includes('postsecondary-anatomy-and-physio.html'));
+  assert(sitemap.includes('postsecondary-anatomy-and-physiology.html'));
+});

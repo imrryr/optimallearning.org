@@ -17,6 +17,10 @@ stylesheet remains `_frame/site-refresh.css`. `wiki.css` adds documentation layo
 - Keep the TutorScript infographic as its original editable SVG.
 - Produce page titles, descriptions, self-canonical URLs, a valid sitemap with
   absolute URLs, and a visible link back to each page's GitHub source.
+- `search-metadata.json` owns website search titles and descriptions for key wiki
+  pages; visible headings and article text remain wiki-owned. Other descriptions
+  use a complete introductory sentence. Redirect and noindex pages are excluded
+  from the sitemap, while remaining available at their existing addresses.
 - Check internal links and images before publishing. A failed build must not
   update the live site's publication marker.
 - The publishing workflow owns `/wiki/` and the generated sitemap. It must never
@@ -91,12 +95,16 @@ publication marker denotes first publication; other errors stop the job.
 
 Build, link/image checks, and tests finish before AWS authentication and upload.
 The workflow publishes `/wiki/`, removes obsolete generated objects within that
-prefix, updates the resource-page link, shared stylesheet/favicon, sitemap and
+prefix, updates the homepage and resource-page links, shared stylesheet/favicon, sitemap and
 robots file, and refreshes the corresponding CloudFront cache paths. It verifies
 public content before uploading the revision marker, refreshes that marker, and
 then verifies the completed publication. S3 publication
 is not an atomic transaction; a partial upload fails visibly and can be repaired
 by rerunning the same verified revision. Concurrent publications are serialized.
+
+The homepage also retains Google's public site-verification meta tag for the
+owner's Search Console property at `https://optimallearning.org/`. This is a
+public ownership marker, not an API credential. Keep it during homepage edits.
 
 ## Recovery and boundaries
 

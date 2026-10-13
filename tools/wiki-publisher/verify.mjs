@@ -35,5 +35,13 @@ for (const name of files) {
 const sitemap = load(readFileSync(join(out, 'sitemap.xml'), 'utf8'), { xml: true });
 const urls = sitemap('urlset > url > loc').map((_, el) => sitemap(el).text()).get();
 if (urls.length < files.length || urls.some(url => !url.startsWith('https://optimallearning.org/'))) errors.push('Invalid sitemap URLs');
+for (const url of urls) {
+  const path = new URL(url).pathname;
+  const file = join(out, decodeURIComponent(path), path.endsWith('/') ? 'index.html' : '');
+  if (!existsSync(file)) { errors.push(`Sitemap target missing: ${url}`); continue; }
+  const $ = load(readFileSync(file, 'utf8'));
+  if (/\b(noindex|none)\b/i.test($('meta[name="robots"]').attr('content') || '') || $('meta[http-equiv="refresh"]').length) errors.push(`Non-indexable sitemap target: ${url}`);
+  if (!$('title').text().trim() || !$('meta[name="description"]').attr('content')?.trim()) errors.push(`Missing search metadata: ${url}`);
+}
 if (errors.length) throw new Error([...new Set(errors)].join('\n'));
 console.log(`Verified ${files.length} HTML pages, ${checked} local links/resources, and ${urls.length} sitemap URLs.`);

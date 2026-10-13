@@ -18,6 +18,9 @@ const page = await (await get('/wiki/Introduction-to-TutorScript.html')).text();
 assert.equal(page, readFileSync(join(process.argv[2], 'wiki/Introduction-to-TutorScript.html'), 'utf8'), 'Public TutorScript page does not match this build.');
 assert(page.includes('TutorScript is the JSON representation'));
 assert(page.includes('https://optimallearning.org/wiki/Introduction-to-TutorScript.html'));
+for (const path of ['/', '/index.html']) {
+  assert.equal(await (await get(path)).text(), readFileSync(join(process.argv[2], 'index.html'), 'utf8'), `Public homepage ${path} does not match this build.`);
+}
 assert((await (await get('/wiki/')).text()).includes('Welcome to MoFaCTS'));
 assert((await (await get('/links.html')).text()).includes('wiki/Introduction-to-TutorScript.html'));
 assert((await (await get('/sitemap.xml')).text()).includes('https://optimallearning.org/wiki/Introduction-to-TutorScript.html'));
