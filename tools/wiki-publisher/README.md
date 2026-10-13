@@ -81,8 +81,9 @@ publication marker denotes first publication; other errors stop the job.
 Build, link/image checks, and tests finish before AWS authentication and upload.
 The workflow publishes `/wiki/`, removes obsolete generated objects within that
 prefix, updates the resource-page link, shared stylesheet/favicon, sitemap and
-robots file, and refreshes the corresponding CloudFront cache paths. It uploads
-the revision marker after content, then verifies public delivery. S3 publication
+robots file, and refreshes the corresponding CloudFront cache paths. It verifies
+public content before uploading the revision marker, refreshes that marker, and
+then verifies the completed publication. S3 publication
 is not an atomic transaction; a partial upload fails visibly and can be repaired
 by rerunning the same verified revision. Concurrent publications are serialized.
 
