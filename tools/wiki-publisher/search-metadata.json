@@ -4,7 +4,7 @@
     "description": "Explore MoFaCTS documentation for students, teachers, researchers, and developers: adaptive practice, TutorScript production rules, and AutoTutor instruction."
   },
   "Introduction-to-TutorScript.md": {
-    "title": "TutorScript: Production Rules for Intelligent Tutoring",
+    "title": "TutorScript: agentic tutoring guided by learning science",
     "description": "How MoFaCTS combines explicit teaching rules, learner models, student choice, and AI-generated instruction—with a visual cycle and annotated examples.",
     "image": {
       "file": "tutorscript-share.png",

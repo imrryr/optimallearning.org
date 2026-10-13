@@ -71,7 +71,7 @@ test('Preserves complete search descriptions and excludes non-indexable sitemap 
   assert.equal(other('meta[property="og:description"]').attr('content'), sentence);
   const tutor = load(readFileSync(join(f.out, 'wiki/Introduction-to-TutorScript.html'), 'utf8'));
   assert.equal(tutor('h1').text(), 'Introduction to TutorScript');
-  assert.equal(tutor('title').text(), 'TutorScript: Production Rules for Intelligent Tutoring | Optimal Learning Lab');
+  assert.equal(tutor('title').text(), 'TutorScript: agentic tutoring guided by learning science | Optimal Learning Lab');
   const imageUrl = new URL(tutor('meta[property="og:image"]').attr('content'));
   assert.equal(imageUrl.origin, 'https://optimallearning.org');
   const image = readFileSync(join(f.out, imageUrl.pathname));
