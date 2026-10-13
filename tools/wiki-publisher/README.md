@@ -69,6 +69,10 @@ public object reads. No public-access policy change is needed.
 2. Create role `GitHubOptimalLearningWikiPublisher` with `aws-trust-policy.json` and
    inline permissions from `aws-permissions-policy.json`. Only this repository's
    `main` branch may assume it. It cannot administer AWS or write unrelated content.
+   The subject includes immutable owner/repository IDs, as required for newly
+   created GitHub repositories. Verify the exact prefix with
+   `gh api repos/imrryr/optimallearning.org/actions/oidc/customization/sub`;
+   do not replace it with a name-only subject or wildcard.
 3. Enable S3 versioning for the website bucket before activation. Automated writes
    and removal of obsolete generated objects then retain recoverable versions.
    Existing versions consume S3 storage; the publisher cannot delete versions.
