@@ -23,8 +23,8 @@ for (const name of files) {
 }
 for (const name of files) {
   const $ = load(readFileSync(join(out, 'wiki', name), 'utf8'));
-  $('a[href],img[src],link[href],script[src]').each((_, el) => {
-    const raw = $(el).attr('href') || $(el).attr('src');
+  $('a[href],img[src],link[href],script[src],meta[property="og:image"]').each((_, el) => {
+    const raw = $(el).attr('href') || $(el).attr('src') || $(el).attr('content');
     const url = new URL(raw, `https://optimallearning.org/wiki/${name}`);
     if (url.origin !== 'https://optimallearning.org') return;
     const local = decodeURIComponent(url.pathname).slice(1) + (url.pathname.endsWith('/') ? 'index.html' : '');

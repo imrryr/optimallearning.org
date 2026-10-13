@@ -5,7 +5,11 @@
   },
   "Introduction-to-TutorScript.md": {
     "title": "TutorScript: Production Rules for Intelligent Tutoring",
-    "description": "TutorScript defines instructional production rules for MoFaCTS and AutoTutor. Explore evaluation, student choice, move selection, and worked examples."
+    "description": "How MoFaCTS combines explicit teaching rules, learner models, student choice, and AI-generated instruction—with a visual cycle and annotated examples.",
+    "image": {
+      "file": "tutorscript-share.png",
+      "alt": "TutorScript instructional cycle: evaluate student understanding, select a production through a learner model or student choice, generate instruction, and collect the student's next response."
+    }
   },
   "AutoTutor-Prompt-Production-Rule.md": {
     "title": "TutorScript Production Rule Example: Explanation, Figure, and Question",

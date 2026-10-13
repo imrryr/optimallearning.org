@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="627" viewBox="0 0 1200 627" role="img" aria-labelledby="title desc">
+  <title id="title">TutorScript: explicit teaching decisions, AI-generated instruction</title>
+  <desc id="desc">A cycle connects evaluation of student evidence, production selection by a learner model or student choice, AI-generated instruction, and the student's next response.</desc>
+  <defs>
+    <linearGradient id="paper" x2="1" y2="1"><stop stop-color="#faf7fd"/><stop offset="1" stop-color="#eee5f5"/></linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 6 4 1 7" fill="none" stroke="#716480" stroke-width="1.5"/></marker>
+  </defs>
+  <rect width="1200" height="627" fill="url(#paper)"/>
+  <rect x="0" width="10" height="627" fill="#102349"/>
+  <g font-family="Inter, Segoe UI, Arial, sans-serif">
+    <text x="64" y="57" font-size="16" font-weight="600" letter-spacing="2" fill="#6c577e">RULE-GUIDED AI TUTORING</text>
+    <text x="60" y="143" font-size="78" font-weight="700" letter-spacing="-3" fill="#102349">TutorScript</text>
+    <text x="64" y="196" font-size="30" fill="#343342">Explicit teaching decisions. AI-generated instruction.</text>
+    <g fill="#fff" stroke="#d8cfe2" stroke-width="1.5">
+      <rect x="64" y="261" width="250" height="176" rx="16"/>
+      <rect x="338" y="261" width="250" height="176" rx="16"/>
+      <rect x="612" y="261" width="250" height="176" rx="16"/>
+      <rect x="886" y="261" width="250" height="176" rx="16"/>
+    </g>
+    <g fill="#edf0f8">
+      <circle cx="100" cy="296" r="17"/><circle cx="374" cy="296" r="17"/><circle cx="648" cy="296" r="17"/><circle cx="922" cy="296" r="17"/>
+    </g>
+    <g fill="#102349" font-size="16" font-weight="700" text-anchor="middle">
+      <text x="100" y="302">1</text><text x="374" y="302">2</text><text x="648" y="302">3</text><text x="922" y="302">4</text>
+    </g>
+    <g fill="#102349" font-size="22" font-weight="600">
+      <text x="84" y="344">Evaluate</text><text x="358" y="344">Select a production</text><text x="632" y="344">Generate instruction</text><text x="906" y="344">Student responds</text>
+    </g>
+    <g fill="#63616e" font-size="18">
+      <text x="84" y="377">Assess the student's</text><text x="84" y="404">current understanding</text>
+      <text x="358" y="377">Learner model</text><text x="358" y="404">or student choice</text>
+      <text x="632" y="377">AI realizes the</text><text x="632" y="404">selected teaching move</text>
+      <text x="906" y="377">New evidence for</text><text x="906" y="404">the next decision</text>
+    </g>
+    <g fill="none" stroke="#716480" stroke-width="2" marker-end="url(#arrow)">
+      <path d="M318 349h15"/><path d="M592 349h15"/><path d="M866 349h15"/>
+      <path d="M1011 451v20q0 18-18 18H207q-18 0-18-18v-20"/>
+    </g>
+    <rect x="471" y="474" width="258" height="30" rx="15" fill="#f3edf7"/>
+    <text x="600" y="495" text-anchor="middle" font-size="16" fill="#6c577e">The instructional cycle continues</text>
+    <path d="M64 540h1072" stroke="#d8cfe2"/>
+    <text x="64" y="582" font-size="20" font-weight="600" fill="#102349">MoFaCTS <tspan font-weight="400" fill="#777080">·</tspan> Optimal Learning Lab</text>
+    <text x="1136" y="582" text-anchor="end" font-size="18" fill="#777080">optimallearning.org</text>
+  </g>
+</svg>

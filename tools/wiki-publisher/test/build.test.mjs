@@ -71,6 +71,14 @@ test('Preserves complete search descriptions and excludes non-indexable sitemap 
   const tutor = load(readFileSync(join(f.out, 'wiki/Introduction-to-TutorScript.html'), 'utf8'));
   assert.equal(tutor('h1').text(), 'Introduction to TutorScript');
   assert.equal(tutor('title').text(), 'TutorScript: Production Rules for Intelligent Tutoring | Optimal Learning Lab');
+  assert.equal(tutor('meta[property="og:image"]').attr('content'), 'https://optimallearning.org/wiki/social/tutorscript-share.png');
+  const image = readFileSync(join(f.out, 'wiki/social/tutorscript-share.png'));
+  assert.equal(image.readUInt32BE(16), 1200);
+  assert.equal(image.readUInt32BE(20), 627);
+  assert.equal(tutor('meta[property="og:image:width"]').attr('content'), '1200');
+  assert.equal(tutor('meta[property="og:image:height"]').attr('content'), '627');
+  assert(tutor('meta[property="og:image:alt"]').attr('content').includes('student choice'));
+  assert(!other('meta[property="og:image"]').length);
   const sitemap = readFileSync(join(f.out, 'sitemap.xml'), 'utf8');
   assert(!sitemap.includes('postsecondary-anatomy-and-physio.html'));
   assert(sitemap.includes('postsecondary-anatomy-and-physiology.html'));

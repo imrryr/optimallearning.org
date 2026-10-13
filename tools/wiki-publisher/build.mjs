@@ -156,6 +156,18 @@ for (const [page, doc] of rendered) {
   const searchTitle = searchMetadata[page]?.title || title;
   const introduction = doc.$('p').toArray().map(el => doc.$(el).text().replace(/\s+/g, ' ').trim()).find(s => s.length > 70 && !s.startsWith('Last Updated:'));
   const description = searchMetadata[page]?.description || (introduction ? [...sentences.segment(introduction)][0].segment.trim() : `${title} — MoFaCTS documentation.`);
+  const image = searchMetadata[page]?.image;
+  let imageTags = '';
+  if (image) {
+    if (!/^[a-z0-9-]+\.png$/.test(image.file) || !image.alt?.trim()) throw new Error(`${page}: invalid sharing image metadata`);
+    const bytes = readFileSync(join(toolDir, 'social', image.file));
+    if (bytes.length < 24 || !bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) throw new Error(`${page}: sharing image must be PNG`);
+    const width = bytes.readUInt32BE(16), height = bytes.readUInt32BE(20);
+    if (width < 1200 || height < 627 || bytes.length > 5_000_000) throw new Error(`${page}: sharing image must be at least 1200 by 627 pixels and under 5 MB`);
+    const imagePath = `wiki/social/${image.file}`;
+    write(imagePath, bytes);
+    imageTags = `<meta property="og:image" content="${origin}/${imagePath}"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="${width}"><meta property="og:image:height" content="${height}"><meta property="og:image:alt" content="${escape(image.alt)}">`;
+  }
   const nav = load(sidebar.$.html(), null, false);
   const navigationHtml = navigation(nav, htmlPath(page), escape);
   const canonical = origin + htmlPath(page);
@@ -166,7 +178,7 @@ for (const [page, doc] of rendered) {
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(searchTitle)} | Optimal Learning Lab</title><meta name="description" content="${escape(description)}">
 <link rel="canonical" href="${canonical}"><meta property="og:title" content="${escape(searchTitle)}"><meta property="og:description" content="${escape(description)}"><meta property="og:type" content="article"><meta property="og:url" content="${canonical}">
-${sharedHead}<link rel="stylesheet" href="/wiki/wiki.css"><script src="/wiki/wiki-navigation.js" defer></script></head>
+${imageTags}${sharedHead}<link rel="stylesheet" href="/wiki/wiki.css"><script src="/wiki/wiki-navigation.js" defer></script></head>
 <body><a class="wiki-skip-link" href="#wiki-content">Skip to documentation</a><div class="site-shell">${header}
 <main class="wiki-layout wiki-shell"><aside class="wiki-sidebar" aria-label="Documentation sidebar"><div class="wiki-sidebar-header"><span class="wiki-sidebar-brand">MoFaCTS <small>Documentation</small></span><button class="wiki-sidebar-toggle" type="button" aria-controls="wiki-navigation" aria-expanded="false" aria-label="Expand documentation sidebar" title="Expand sidebar">${icon('panel')}</button></div><nav id="wiki-navigation" aria-label="Documentation">${navigationHtml}</nav></aside>
 <article class="wiki-article" id="wiki-content">${pageTitle}<div class="wiki-page-meta"><a href="/wiki/">Documentation home</a><a href="${wikiUrl}/${encodeURIComponent(page.slice(0, -3))}">View source on GitHub</a></div>

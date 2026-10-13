@@ -27,6 +27,10 @@ remain generated HTML. Reduced-motion preferences disable the width animation.
   pages; visible headings and article text remain wiki-owned. Other descriptions
   use a complete introductory sentence. Redirect and noindex pages are excluded
   from the sitemap, while remaining available at their existing addresses.
+- Optional `image` metadata supplies a website-owned sharing PNG and accessible
+  description. Files live in `social/` and publish under `/wiki/social/`. The build
+  reads dimensions from the PNG, checks LinkedIn's size limits, and emits Open Graph
+  image tags. Link verification checks the asset; live delivery checks its bytes.
 - Check internal links and images before publishing. A failed build must not
   update the live site's publication marker.
 - The publishing workflow owns `/wiki/` and the generated sitemap. It must never
@@ -123,3 +127,14 @@ public ownership marker, not an API credential. Keep it during homepage edits.
 - The workflow never deploys source tools, `.git`, local settings, or `.diagrams` intermediates.
 - Live HTTP verification proves delivery, not Google indexing. Search Console sitemap
   submission is a separate account action; Google controls indexing and ranking.
+
+## TutorScript sharing graphic
+
+`social/tutorscript-share.svg` is the editable, original vector artwork created for
+this website. Its checked-in `tutorscript-share.png` is the 1200 × 627 sharing export;
+it uses the site's navy/lavender palette and Inter/Segoe UI sans-serif font stack.
+Keep the PNG synchronized when editing the SVG. The publisher copies the approved
+PNG without requiring a new image-rendering dependency in CI. Only the PNG is
+published as a sharing asset; the detailed instructional-cycle SVG stays in the wiki.
+After publishing a changed card, inspect the page at LinkedIn Post Inspector before
+sharing. LinkedIn caches previews; refreshing applies to new posts, not existing ones.

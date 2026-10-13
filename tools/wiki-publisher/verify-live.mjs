@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { load } from 'cheerio';
 
 const expected = JSON.parse(readFileSync(join(process.argv[2], 'wiki/publication.json'), 'utf8'));
 const origin = 'https://optimallearning.org';
@@ -18,6 +19,13 @@ const page = await (await get('/wiki/Introduction-to-TutorScript.html')).text();
 assert.equal(page, readFileSync(join(process.argv[2], 'wiki/Introduction-to-TutorScript.html'), 'utf8'), 'Public TutorScript page does not match this build.');
 assert(page.includes('TutorScript is the JSON representation'));
 assert(page.includes('https://optimallearning.org/wiki/Introduction-to-TutorScript.html'));
+const sharingImage = load(page)('meta[property="og:image"]').attr('content');
+assert(sharingImage, 'TutorScript sharing image is missing.');
+const sharingUrl = new URL(sharingImage);
+assert.equal(sharingUrl.origin, origin);
+const imageResponse = await get(sharingUrl.pathname);
+assert(imageResponse.headers.get('content-type')?.includes('image/png'));
+assert.deepEqual(Buffer.from(await imageResponse.arrayBuffer()), readFileSync(join(process.argv[2], decodeURIComponent(sharingUrl.pathname))), 'Public sharing image does not match this build.');
 for (const asset of ['wiki.css', 'wiki-navigation.js']) {
   assert.equal(await (await get('/wiki/' + asset)).text(), readFileSync(join(process.argv[2], 'wiki', asset), 'utf8'), `Public navigation asset ${asset} does not match this build.`);
 }
