@@ -96,7 +96,11 @@ select {
 .site-header {
   position: relative;
   overflow: hidden;
-  padding: 24px 20px 48px;
+  padding: 24px 20px 18px;
+}
+
+.site-header:has(.hero) {
+  padding-bottom: 48px;
 }
 
 .site-header::before,
@@ -137,7 +141,7 @@ select {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  margin-bottom: 28px;
+  margin-bottom: 18px;
 }
 
 .brand {
@@ -235,6 +239,23 @@ select {
   font-weight: 500;
 }
 
+.site-nav-desktop {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  justify-content: center;
+  gap: 6.3px;
+  padding: 6.3px;
+}
+
+.site-nav-desktop a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 46.2px;
+  padding: 6.3px 12.6px;
+  font-size: .987rem;
+}
+
 .site-nav a:hover,
 .site-nav a:focus-visible,
 .site-nav a[aria-current="page"] {
@@ -313,7 +334,7 @@ select {
   grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
   gap: 28px;
   align-items: stretch;
-  margin-top: 34px;
+  margin-top: 18px;
 }
 
 .hero.hero-single {
@@ -746,7 +767,7 @@ select {
 }
 
 .page-header {
-  padding: 12px 20px 8px;
+  padding: 0 20px 8px;
 }
 
 .page-header-card {
@@ -817,7 +838,8 @@ button:disabled,
     padding-right: 16px;
   }
 
-  .site-header {
+  .site-header,
+  .site-header:has(.hero) {
     padding-top: 16px;
     padding-bottom: 18px;
   }
@@ -897,8 +919,7 @@ button:disabled,
     flex-basis: 44px;
   }
 
-  .hero,
-  .page-header-card {
+  .hero {
     margin-top: 10px;
   }
 

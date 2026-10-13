@@ -10,6 +10,10 @@ area, without covering it. Section icons also expand their link group. Section o
 and links come from `_Sidebar.md`; `navigation.mjs` supplies website labels and SVG
 icons. `wiki-navigation.js` owns the toggle and Escape behavior. Articles and links
 remain generated HTML. Reduced-motion preferences disable the width animation.
+At widths of 800px or less, the navigation sits above the full-width article.
+It defaults to a compact documentation header with the existing toggle; collapsed
+navigation links and icons are hidden. Expanding it reveals a scrollable menu
+above the article, without an overlay or a reserved sidebar column.
 
 ## Publishing contract
 
