@@ -33,6 +33,13 @@ Requires Node.js 24, Git, and the approved locked build dependencies. Mermaid CL
 installs its browser dependency for build-time SVG rendering. There is no Mermaid
 runtime or Markdown parser on the public website.
 
+CI uses the Ubuntu runner's installed Chrome at `/opt/google/chrome/chrome`
+through `PUPPETEER_EXECUTABLE_PATH`, with normal headless mode and sandboxing
+enabled. Its AppArmor profile permits Chrome's sandbox; downloaded browser
+binaries are not covered by that profile. CI skips the unused browser download
+and fails if the configured executable is missing. Local builds use Puppeteer's
+installed Chrome. Never disable sandboxing to make diagram rendering pass.
+
 ```powershell
 npm ci --prefix tools/wiki-publisher
 npm test --prefix tools/wiki-publisher

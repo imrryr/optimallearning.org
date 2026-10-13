@@ -121,7 +121,7 @@ for (const page of pages) {
     mkdirSync(dirname(input), { recursive: true });
     mkdirSync(dirname(target), { recursive: true });
     writeFileSync(input, doc.$(el).text());
-    execFileSync(process.execPath, [diagramCli, '-i', input, '-o', target, '-c', diagramConfig, '-b', 'transparent'], { stdio: 'pipe' });
+    execFileSync(process.execPath, [diagramCli, '-i', input, '-o', target, '-c', diagramConfig, '-p', join(toolDir, 'puppeteer.json'), '-b', 'transparent'], { stdio: 'pipe' });
     doc.$(el).parent().replaceWith(`<figure><img src="/wiki/diagrams/${encodeURIComponent(stem)}.svg" alt="${escape(doc.headings[0]?.title || page)} — diagram ${i + 1}"></figure>`);
     diagramCount++;
   }

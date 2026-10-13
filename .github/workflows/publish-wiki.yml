@@ -25,6 +25,10 @@ jobs:
     if: vars.AWS_ROLE_ARN != ''
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    env:
+      # The runner's Chrome has an AppArmor profile permitting its sandbox.
+      PUPPETEER_EXECUTABLE_PATH: /opt/google/chrome/chrome
+      PUPPETEER_SKIP_DOWNLOAD: 'true'
     permissions:
       contents: read
       id-token: write
@@ -58,6 +62,7 @@ jobs:
         env:
           WIKI_REVISION: ${{ steps.revisions.outputs.wiki_revision }}
         run: |
+          test -x "$PUPPETEER_EXECUTABLE_PATH"
           node tools/wiki-publisher/build.mjs --wiki .build/wiki-source --revision "$WIKI_REVISION" --publisher-revision "$GITHUB_SHA"
           node tools/wiki-publisher/verify.mjs .build/site
       - uses: actions/upload-artifact@v4
