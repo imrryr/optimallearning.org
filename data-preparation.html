@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Preparation | Optimal Learning Lab</title>
+  <meta name="description" content="Data preparation guidance for LKT, including loading data and spacing-related predictors.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="_frame/site-refresh.css">
+  <link rel="icon" href="_frame/favicon-network.svg?v=3" type="image/svg+xml">
+  <meta property="og:title" content="Data Preparation | Optimal Learning Lab">
+  <meta property="og:description" content="Data preparation guidance for LKT, including loading data and spacing-related predictors.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://optimallearning.org/data-preparation.html">
+  <meta property="og:image" content="https://optimallearning.org/_media/img/sq_icon/images.jpg">
+  <link rel="canonical" href="https://optimallearning.org/data-preparation.html">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <div class="topbar">
+          <a class="brand" href="index.html" aria-label="Optimal Learning Lab home">
+            <div class="brand-logo-frame"><img class="brand-logo" src="_frame/favicon-network.svg?v=3" alt="" aria-hidden="true"></div>
+            <div class="brand-text">
+              <span class="brand-mark">Optimal Learning <em>Lab</em></span>
+              <p class="brand-tagline">Applying cognitive theory to optimize learning.</p>
+            </div>
+          </a>
+        <details class="mobile-nav-wrap">
+  <summary class="mobile-nav-toggle">Menu</summary>
+  <nav class="site-nav site-nav-mobile" aria-label="Mobile navigation">
+<a href="index.html">Home</a>
+          <a href="research.html">Research</a>
+          <a href="publications.html">Publications</a>
+          <a href="people.html">People</a>
+          <a href="mobile-fact-and-concept-training-system-mofacts.html">Projects</a>
+          <a href="funding.html">Funding</a>
+          <a href="links.html" aria-current="page">Resources</a>
+          <a href="people.html#contact">Contact</a>
+  </nav>
+</details>        </div>
+        <nav class="site-nav site-nav-desktop" aria-label="Primary navigation">
+<a href="index.html">Home</a>
+          <a href="research.html">Research</a>
+          <a href="publications.html">Publications</a>
+          <a href="people.html">People</a>
+          <a href="mobile-fact-and-concept-training-system-mofacts.html">Projects</a>
+          <a href="funding.html">Funding</a>
+          <a href="links.html" aria-current="page">Resources</a>
+          <a href="people.html#contact">Contact</a>
+</nav>
+
+      </div>
+    </header>
+
+    <section class="page-header">
+      <div class="page-header-card compact">
+        <div>
+          <span class="eyebrow">Data Preparation</span>
+          <h1 class="page-title">Preparing data for LKT models and spacing features.</h1>
+          <p class="page-intro">Key preprocessing steps for LKT models and spacing-related features.</p>
+        </div>
+      </div>
+    </section>
+
+    <main class="page-main">
+      <section class="page-section" aria-labelledby="prep-loading">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Step 1</span>
+            <h2 id="prep-loading">Initial loading of data</h2>
+          </div>
+        </div>
+        <div class="card-grid two-up">
+          <article class="card">
+            <p>A typical LKT workflow begins by loading a dataset, standardizing key columns, creating a response variable, and organizing observations by student and time. Cross-validation folds may also be created during preprocessing so model evaluation can be handled consistently later.</p>
+          </article>
+          <article class="card">
+            <h3>Embedded CRAN section</h3>
+            <iframe class="embed-frame embed-frame-sm" src="https://cran.r-project.org/web/packages/LKT/vignettes/Examples.html#load-data-shows-modifications-to-create-needed-columns" title="LKT data loading example" loading="lazy"></iframe>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="prep-spacing">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Step 2</span>
+            <h2 id="prep-spacing">computeSpacingPredictors</h2>
+          </div>        </div>
+        <article class="card">
+          <p><code>computeSpacingPredictors</code> is used to derive time-based features from learner interaction histories. In general terms, the function works from timestamps and knowledge components to calculate intervals between interactions, prior spacing, and related time-sensitive features that can then be used in the model.</p>
+          <ul class="simple-list">
+            <li><strong>Inputs:</strong> interaction data with timestamps and knowledge-component structure</li>
+            <li><strong>Process:</strong> identify event timing, calculate elapsed intervals, and derive spacing-oriented predictors</li>
+            <li><strong>Purpose:</strong> make temporal learning history available to the model in a usable form</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <p>Optimal Learning Lab, University of Memphis.</p>
+        <p><a href="mailto:ppavlik@memphis.edu">ppavlik@memphis.edu</a></p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+
+
+

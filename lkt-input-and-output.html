@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LKT Input and Output | Optimal Learning Lab</title>
+  <meta name="description" content="Reference guide to important LKT input parameters and output values.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="_frame/site-refresh.css">
+  <link rel="icon" href="_frame/favicon-network.svg?v=3" type="image/svg+xml">
+  <meta property="og:title" content="LKT Input and Output | Optimal Learning Lab">
+  <meta property="og:description" content="Reference guide to important LKT input parameters and output values.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://optimallearning.org/lkt-input-and-output.html">
+  <meta property="og:image" content="https://optimallearning.org/_media/img/sq_icon/images.jpg">
+  <link rel="canonical" href="https://optimallearning.org/lkt-input-and-output.html">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <div class="topbar">
+          <a class="brand" href="index.html" aria-label="Optimal Learning Lab home">
+            <div class="brand-logo-frame"><img class="brand-logo" src="_frame/favicon-network.svg?v=3" alt="" aria-hidden="true"></div>
+            <div class="brand-text">
+              <span class="brand-mark">Optimal Learning <em>Lab</em></span>
+              <p class="brand-tagline">Applying cognitive theory to optimize learning.</p>
+            </div>
+          </a>
+        <details class="mobile-nav-wrap">
+  <summary class="mobile-nav-toggle">Menu</summary>
+  <nav class="site-nav site-nav-mobile" aria-label="Mobile navigation">
+<a href="index.html">Home</a>
+          <a href="research.html">Research</a>
+          <a href="publications.html">Publications</a>
+          <a href="people.html">People</a>
+          <a href="mobile-fact-and-concept-training-system-mofacts.html">Projects</a>
+          <a href="funding.html">Funding</a>
+          <a href="links.html" aria-current="page">Resources</a>
+          <a href="people.html#contact">Contact</a>
+  </nav>
+</details>        </div>
+        <nav class="site-nav site-nav-desktop" aria-label="Primary navigation">
+<a href="index.html">Home</a>
+          <a href="research.html">Research</a>
+          <a href="publications.html">Publications</a>
+          <a href="people.html">People</a>
+          <a href="mobile-fact-and-concept-training-system-mofacts.html">Projects</a>
+          <a href="funding.html">Funding</a>
+          <a href="links.html" aria-current="page">Resources</a>
+          <a href="people.html#contact">Contact</a>
+</nav>
+
+      </div>
+    </header>
+
+    <section class="page-header">
+      <div class="page-header-card compact">
+        <div>
+          <span class="eyebrow">Reference</span>
+          <h1 class="page-title">Input parameters and output values used in typical LKT workflows.</h1>
+          <p class="page-intro">Reference guide to common input parameters and output values in LKT workflows.</p>
+        </div>
+      </div>
+    </section>
+
+    <main class="page-main">
+      <section class="page-section" aria-labelledby="lkt-inputs">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Inputs</span>
+            <h2 id="lkt-inputs">Common input parameters</h2>
+          </div>
+        </div>
+        <div class="card-grid two-up">
+          <article class="card">
+            <h3>Data and structure</h3>
+            <ul class="simple-list">
+              <li><code>data</code>: dataset containing student and outcome information</li>
+              <li><code>components</code>: factors used to compute features per subject</li>
+              <li><code>features</code>: methods used to compute those features</li>
+              <li><code>curvefeats</code>: columns used with difference-style functions</li>
+              <li><code>connectors</code>: linear-equation operators such as <code>+</code>, <code>*</code>, and <code>:</code></li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Fitting and optimization</h3>
+            <ul class="simple-list">
+              <li><code>usefolds</code>: folds used for model fitting</li>
+              <li><code>fixedpars</code> and <code>seedpars</code>: parameter vectors used in fitting and initialization</li>
+              <li><code>epsilon</code>, <code>cost</code>, <code>type</code>, <code>bias</code>: solver-related settings</li>
+              <li><code>lowb</code>, <code>highb</code>, <code>maxitv</code>, <code>factrv</code>: optimization controls</li>
+              <li><code>dualfit</code>, <code>interc</code>, <code>verbose</code>, <code>nosolve</code>: behavior flags</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="lkt-outputs">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Outputs</span>
+            <h2 id="lkt-outputs">Common returned values</h2>
+          </div>
+        </div>
+        <div class="card-grid two-up">
+          <article class="card">
+            <h3>Model objects and fit</h3>
+            <ul class="simple-list">
+              <li><code>model</code>: the fitted logistic regression model</li>
+              <li><code>nullmodel</code>: intercept-only baseline model</li>
+              <li><code>coefs</code>: fitted coefficients</li>
+              <li><code>r2</code>: pseudo R-squared style fit measure</li>
+              <li><code>optimizedpars</code>: optimized parameters from fitting</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Predictions and derived outputs</h3>
+            <ul class="simple-list">
+              <li><code>prediction</code>: predicted probabilities or outcomes</li>
+              <li><code>latencymodel</code>: latency-related model if dual fitting is enabled</li>
+              <li><code>studentRMSE</code>: per-student prediction error summary</li>
+              <li><code>newdata</code>: transformed or feature-enriched data</li>
+              <li><code>automat</code>: record of automatic transformations or feature engineering</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <p>Optimal Learning Lab, University of Memphis.</p>
+        <p><a href="mailto:ppavlik@memphis.edu">ppavlik@memphis.edu</a></p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+
+
+

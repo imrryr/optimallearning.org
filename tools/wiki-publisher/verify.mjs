@@ -1,0 +1,39 @@
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { load } from 'cheerio';
+
+const site = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const out = resolve(process.argv[2] || join(site, '.build/site'));
+const files = readdirSync(join(out, 'wiki')).filter(name => name.endsWith('.html'));
+const errors = [];
+let checked = 0;
+const idsByPath = new Map();
+for (const name of files) {
+  const path = join(out, 'wiki', name);
+  const $ = load(readFileSync(path, 'utf8'));
+  const ids = $('[id]').map((_, el) => $(el).attr('id')).get();
+  if (new Set(ids).size !== ids.length) errors.push(`${name}: duplicate HTML ids`);
+  idsByPath.set(path, new Set(ids));
+  if ($('h1').length !== 1) errors.push(`${name}: expected one h1`);
+  if ($('link[rel="canonical"]').length !== 1) errors.push(`${name}: expected one canonical URL`);
+  if ($('script,iframe,object,embed').length) errors.push(`${name}: unexpected active content`);
+}
+for (const name of files) {
+  const $ = load(readFileSync(join(out, 'wiki', name), 'utf8'));
+  $('a[href],img[src],link[href]').each((_, el) => {
+    const raw = $(el).attr('href') || $(el).attr('src');
+    const url = new URL(raw, `https://optimallearning.org/wiki/${name}`);
+    if (url.origin !== 'https://optimallearning.org') return;
+    const local = decodeURIComponent(url.pathname).slice(1) + (url.pathname.endsWith('/') ? 'index.html' : '');
+    const path = join(local.startsWith('wiki/') ? out : site, local);
+    if (!existsSync(path)) errors.push(`${name}: missing resource ${raw}`);
+    else if (url.hash && idsByPath.has(path) && !idsByPath.get(path).has(decodeURIComponent(url.hash.slice(1)))) errors.push(`${name}: missing anchor ${raw}`);
+    checked++;
+  });
+}
+const sitemap = load(readFileSync(join(out, 'sitemap.xml'), 'utf8'), { xml: true });
+const urls = sitemap('urlset > url > loc').map((_, el) => sitemap(el).text()).get();
+if (urls.length < files.length || urls.some(url => !url.startsWith('https://optimallearning.org/'))) errors.push('Invalid sitemap URLs');
+if (errors.length) throw new Error([...new Set(errors)].join('\n'));
+console.log(`Verified ${files.length} HTML pages, ${checked} local links/resources, and ${urls.length} sitemap URLs.`);

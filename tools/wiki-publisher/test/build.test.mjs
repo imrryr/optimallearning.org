@@ -1,0 +1,46 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
+import { dirname, join, relative, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { load } from 'cheerio';
+
+const tool = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const base = resolve(tool, '../../.build');
+mkdirSync(base, { recursive: true });
+function fixture(t, home) {
+  const dir = mkdtempSync(join(base, 'test-'));
+  t.after(() => { assert(!relative(base, dir).startsWith('..')); rmSync(dir, { recursive: true, force: true }); });
+  const wiki = join(dir, 'source'); mkdirSync(wiki);
+  const git = (...args) => execFileSync('git', ['-C', wiki, ...args], { stdio: 'pipe' });
+  git('init'); git('config', 'user.name', 'Publisher test'); git('config', 'user.email', 'test@example.invalid');
+  writeFileSync(join(wiki, 'Home.md'), home);
+  writeFileSync(join(wiki, 'Other-page.md'), '# Other page\n\n## Shared heading\n\nSaved content.\n\n## Shared heading\n\nAnother section.\n');
+  writeFileSync(join(wiki, '_Sidebar.md'), '[Home](Home)\n\n[Other page](Other-page#shared-heading-1)\n');
+  git('add', '.'); git('commit', '-m', 'Fixture');
+  return { wiki, out: join(dir, 'out') };
+}
+const build = f => execFileSync(process.execPath, [join(tool, 'build.mjs'), '--wiki', f.wiki, '--out', f.out], { stdio: 'pipe' });
+
+test('Publishes committed content with website links and stable duplicate heading anchors', t => {
+  const f = fixture(t, '# Home\n\n[Target](Other-page#shared-heading-1)\n\n| A | B |\n|---|---|\n| one | two |\n');
+  writeFileSync(join(f.wiki, 'Home.md'), '# Uncommitted text must not publish');
+  build(f);
+  const html = readFileSync(join(f.out, 'wiki/index.html'), 'utf8');
+  const $ = load(html);
+  assert.equal($('h1').text(), 'Home');
+  assert.equal($('article a').filter((_, el) => $(el).text() === 'Target').attr('href'), '/wiki/Other-page.html#shared-heading-1');
+  assert.equal($('.wiki-table table').length, 1);
+  assert.equal($('link[rel="canonical"]').attr('href'), 'https://optimallearning.org/wiki/');
+  assert(!html.includes('Uncommitted text'));
+  execFileSync(process.execPath, [join(tool, 'verify.mjs'), f.out], { stdio: 'pipe' });
+});
+test('Rejects missing wiki targets before writing published pages', t => {
+  const f = fixture(t, '# Home\n\n[Broken](Missing-page)');
+  assert.throws(() => build(f), error => error.stderr.toString().includes('missing page or asset Missing-page'));
+});
+test('Rejects active HTML and executable URLs', t => {
+  const f = fixture(t, '# Home\n\n<script>alert(1)</script>\n\n[Execute](javascript:alert%281%29)');
+  assert.throws(() => build(f), error => error.stderr.toString().includes('unsupported URL'));
+});

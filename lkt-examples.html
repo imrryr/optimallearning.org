@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LKT Examples | Optimal Learning Lab</title>
+  <meta name="description" content="Examples and embedded vignette sections for common LKT workflows.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="_frame/site-refresh.css">
+  <link rel="icon" href="_frame/favicon-network.svg?v=3" type="image/svg+xml">
+  <meta property="og:title" content="LKT Examples | Optimal Learning Lab">
+  <meta property="og:description" content="Examples and embedded vignette sections for common LKT workflows.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://optimallearning.org/lkt-examples.html">
+  <meta property="og:image" content="https://optimallearning.org/_media/img/sq_icon/images.jpg">
+  <link rel="canonical" href="https://optimallearning.org/lkt-examples.html">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <div class="topbar">
+          <a class="brand" href="index.html" aria-label="Optimal Learning Lab home">
+            <div class="brand-logo-frame"><img class="brand-logo" src="_frame/favicon-network.svg?v=3" alt="" aria-hidden="true"></div>
+            <div class="brand-text">
+              <span class="brand-mark">Optimal Learning <em>Lab</em></span>
+              <p class="brand-tagline">Applying cognitive theory to optimize learning.</p>
+            </div>
+          </a>
+        <details class="mobile-nav-wrap">
+  <summary class="mobile-nav-toggle">Menu</summary>
+  <nav class="site-nav site-nav-mobile" aria-label="Mobile navigation">
+<a href="index.html">Home</a>
+          <a href="research.html">Research</a>
+          <a href="publications.html">Publications</a>
+          <a href="people.html">People</a>
+          <a href="mobile-fact-and-concept-training-system-mofacts.html">Projects</a>
+          <a href="funding.html">Funding</a>
+          <a href="links.html" aria-current="page">Resources</a>
+          <a href="people.html#contact">Contact</a>
+  </nav>
+</details>        </div>
+        <nav class="site-nav site-nav-desktop" aria-label="Primary navigation">
+<a href="index.html">Home</a>
+          <a href="research.html">Research</a>
+          <a href="publications.html">Publications</a>
+          <a href="people.html">People</a>
+          <a href="mobile-fact-and-concept-training-system-mofacts.html">Projects</a>
+          <a href="funding.html">Funding</a>
+          <a href="links.html" aria-current="page">Resources</a>
+          <a href="people.html#contact">Contact</a>
+</nav>
+
+      </div>
+    </header>
+
+    <section class="page-header">
+      <div class="page-header-card compact">
+        <div>
+          <span class="eyebrow">Examples</span>
+          <h1 class="page-title">Worked example paths for LKT models and feature construction.</h1>
+          <p class="page-intro">Worked examples for common LKT modeling and feature-construction workflows.</p>
+        </div>
+      </div>
+    </section>
+
+    <main class="page-main">
+      <section class="page-section" id="examples-loading" aria-labelledby="examples-loading-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Example 1</span>
+            <h2 id="examples-loading-title">Initial loading of data</h2>
+          </div>        </div>
+        <div class="card-grid two-up">
+          <article class="card">
+            <p>A typical example starts by loading the data, standardizing columns, creating folds, ordering events, and preparing time-based information for later feature engineering.</p>
+          </article>
+          <article class="card">
+            <iframe class="embed-frame embed-frame-sm" src="https://cran.r-project.org/web/packages/LKT/vignettes/Examples.html#load-data-shows-modifications-to-create-needed-columns" title="LKT initial loading example" loading="lazy"></iframe>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" id="examples-afm" aria-labelledby="examples-afm-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Example 2</span>
+            <h2 id="examples-afm-title">Additive Factors Model (AFM)</h2>
+          </div>        </div>
+        <div class="card-grid two-up">
+          <article class="card">
+            <p>AFM estimates student performance in relation to knowledge component difficulty and learning rate. It is helpful for understanding broad learning structure without focusing on richer success/failure separation.</p>
+          </article>
+          <article class="card">
+            <iframe class="embed-frame embed-frame-sm" src="https://cran.r-project.org/web/packages/LKT/vignettes/Examples.html#additive-factors-model-afm-fixed-effect-version" title="LKT AFM example" loading="lazy"></iframe>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" id="examples-pfa" aria-labelledby="examples-pfa-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Example 3</span>
+            <h2 id="examples-pfa-title">Performance Factors Analysis (PFA)</h2>
+          </div>        </div>
+        <div class="card-grid two-up">
+          <article class="card">
+            <p>PFA separates the impact of successful and unsuccessful prior responses, making it easier to reflect actual learner history in the model and to reason about strengths and weaknesses across components.</p>
+          </article>
+          <article class="card">
+            <iframe class="embed-frame embed-frame-sm" src="https://cran.r-project.org/web/packages/LKT/vignettes/Examples.html#performance-factors-analysis-pfa-fixed-effect-version" title="LKT PFA example" loading="lazy"></iframe>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <p>Optimal Learning Lab, University of Memphis.</p>
+        <p><a href="mailto:ppavlik@memphis.edu">ppavlik@memphis.edu</a></p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+
+
+

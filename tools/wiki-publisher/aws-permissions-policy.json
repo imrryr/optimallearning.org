@@ -1,0 +1,42 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListGeneratedWikiOnly",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::optimallearning.org",
+      "Condition": { "StringLike": { "s3:prefix": ["wiki/", "wiki/*"] } }
+    },
+    {
+      "Sid": "VerifyBucketRecovery",
+      "Effect": "Allow",
+      "Action": ["s3:GetBucketLocation", "s3:GetBucketVersioning"],
+      "Resource": "arn:aws:s3:::optimallearning.org"
+    },
+    {
+      "Sid": "PublishGeneratedWiki",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+      "Resource": "arn:aws:s3:::optimallearning.org/wiki/*"
+    },
+    {
+      "Sid": "PublishNavigationThemeAndDiscoveryFiles",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject"],
+      "Resource": [
+        "arn:aws:s3:::optimallearning.org/sitemap.xml",
+        "arn:aws:s3:::optimallearning.org/robots.txt",
+        "arn:aws:s3:::optimallearning.org/links.html",
+        "arn:aws:s3:::optimallearning.org/_frame/site-refresh.css",
+        "arn:aws:s3:::optimallearning.org/_frame/favicon-network.svg"
+      ]
+    },
+    {
+      "Sid": "RefreshOnlyWebsiteDistribution",
+      "Effect": "Allow",
+      "Action": ["cloudfront:CreateInvalidation", "cloudfront:GetInvalidation"],
+      "Resource": "arn:aws:cloudfront::146041414899:distribution/E1TXXZFADCMIJE"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+name: Publish MoFaCTS wiki
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Rebuild even if both revisions are already published
+        type: boolean
+        default: false
+  schedule:
+    - cron: '17 * * * *'
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wiki-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # Setting this variable is the explicit activation step after AWS setup.
+    if: vars.AWS_ROLE_ARN != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check published revisions
+        id: revisions
+        env:
+          FORCE_PUBLISH: ${{ inputs.force || 'false' }}
+        run: node tools/wiki-publisher/check-publication.mjs
+      - name: Install locked build dependencies
+        if: steps.revisions.outputs.changed == 'true'
+        run: npm ci --prefix tools/wiki-publisher --no-fund
+      - name: Test the publisher
+        if: steps.revisions.outputs.changed == 'true'
+        run: npm test --prefix tools/wiki-publisher
+      - name: Fetch exactly the selected wiki revision
+        if: steps.revisions.outputs.changed == 'true'
+        env:
+          WIKI_REVISION: ${{ steps.revisions.outputs.wiki_revision }}
+        run: |
+          git init .build/wiki-source
+          git -C .build/wiki-source remote add origin https://github.com/memphis-iis/MoFaCTS.wiki.git
+          git -C .build/wiki-source fetch --depth 1 origin "$WIKI_REVISION"
+          git -C .build/wiki-source checkout --detach FETCH_HEAD
+      - name: Build and verify the themed documentation
+        if: steps.revisions.outputs.changed == 'true'
+        env:
+          WIKI_REVISION: ${{ steps.revisions.outputs.wiki_revision }}
+        run: |
+          node tools/wiki-publisher/build.mjs --wiki .build/wiki-source --revision "$WIKI_REVISION" --publisher-revision "$GITHUB_SHA"
+          node tools/wiki-publisher/verify.mjs .build/site
+      - uses: actions/upload-artifact@v4
+        if: steps.revisions.outputs.changed == 'true'
+        with:
+          name: website-preview
+          path: |
+            .build/site/wiki/
+            .build/site/sitemap.xml
+            .build/site/robots.txt
+          retention-days: 14
+      - name: Authenticate to AWS with short-lived credentials
+        if: steps.revisions.outputs.changed == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+      - name: Publish and refresh the website
+        if: steps.revisions.outputs.changed == 'true'
+        run: bash tools/wiki-publisher/publish.sh .build/site
+      - name: Verify public delivery
+        if: steps.revisions.outputs.changed == 'true'
+        run: node tools/wiki-publisher/verify-live.mjs .build/site
