@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects | Optimal Learning Lab</title>
-  <meta name="description" content="MoFaCTS, LKT, and related project work from the Optimal Learning Lab.">
+  <meta name="description" content="MoFaCTS for adaptive practice, LKT for learner modeling, and TutorScript/SPARC research combining explicit instructional rules with generative AI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
   <link rel="stylesheet" href="_frame/site-refresh.css">
   <link rel="icon" href="_frame/favicon-network.svg?v=3" type="image/svg+xml">
   <meta property="og:title" content="Projects | Optimal Learning Lab">
-  <meta property="og:description" content="Project work centered on MoFaCTS, LKT, and adaptive learning systems.">
+  <meta property="og:description" content="MoFaCTS for adaptive practice, LKT for learner modeling, and TutorScript/SPARC research combining explicit instructional rules with generative AI.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://optimallearning.org/mobile-fact-and-concept-training-system-mofacts.html">
     <link rel="canonical" href="https://optimallearning.org/mobile-fact-and-concept-training-system-mofacts.html">
@@ -59,28 +59,48 @@
       <div class="page-header-card compact">
         <div>
           <span class="eyebrow">Projects</span>
-          <h1 class="page-title">Two core tools: MoFaCTS for adaptive practice and LKT for modeling and analysis.</h1>
-          <p class="page-intro">MoFaCTS is the lab's adaptive practice platform, and LKT is its package and documentation layer for related modeling and analysis workflows.</p>
+          <h1 class="page-title">MoFaCTS, LKT, and TutorScript/SPARC</h1>
+          <p class="page-intro">MoFaCTS delivers adaptive practice; LKT builds interpretable learner models; and TutorScript/SPARC brings explicit instructional rules and generative AI together in a new research system for adaptive tutoring.</p>
         </div>
       </div>
     </section>
 
     <main class="page-main">
+      <section class="page-section" aria-labelledby="project-overview">
+        <div class="section-heading"><h2 id="project-overview">Explore the lab's research tools</h2></div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>MoFaCTS</h3>
+            <p>Use adaptive practice to study and test models of learning. Lesson access depends on available content and the deployment.</p>
+            <div class="person-links"><a href="#mofacts">Use MoFaCTS and explore the code</a></div>
+          </article>
+          <article class="feature-card">
+            <h3>LKT</h3>
+            <p>Build interpretable learner models in R. MoFaCTS users can explore LKT to analyze practice histories and model learner performance.</p>
+            <div class="person-links"><a href="#lkt">Install LKT and start the tutorial</a></div>
+          </article>
+          <article class="feature-card">
+            <h3>TutorScript/SPARC</h3>
+            <p>Explore a new research innovation combining explicit instructional rules, learner models, and generative AI. Instructional choices are available for inspection and study.</p>
+            <div class="person-links"><a href="#sparc-project">Explore the research system</a></div>
+          </article>
+        </div>
+      </section>
       <section class="page-section" id="mofacts" aria-labelledby="mofacts-title">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">Core Tool 1</span>
+            <span class="section-kicker">Adaptive practice</span>
             <h2 id="mofacts-title">MoFaCTS</h2>
           </div>        </div>
         <div class="card-grid two-up">
           <article class="card">
             <h3>What it does</h3>
-            <p>MoFaCTS supports research on how practice should be selected, scheduled, and adapted across different kinds of learning content. It also serves as a practical system for delivering those ideas in usable instructional workflows.</p>
+            <p>MoFaCTS supports research on how practice should be selected, scheduled, and adapted across different kinds of learning content. Use MoFaCTS for adaptive practice when suitable lesson content and access are available, or use the open-source code for a research deployment.</p>
             <p>A skinned MoFaCTS implementation also supports adaptive video learning through Cognivideo.</p>
-            <p>The MoFaCTS codebase is available under the Business Source License 1.1 (BUSL 1.1).</p>
+            <p>The MoFaCTS codebase is available under the GNU Affero General Public License version 3 (AGPL-3.0-only).</p>
             <div class="person-links">
               <a href="https://mofacts.optimallearning.org/" target="_blank" rel="noopener">Open MoFaCTS</a>
-              <a href="https://github.com/memphis-iis/mofacts-ies" target="_blank" rel="noopener">MoFaCTS GitHub</a>
+              <a href="https://github.com/memphis-iis/MoFaCTS" target="_blank" rel="noopener">MoFaCTS GitHub</a>
               <a href="https://cognivideo.org" target="_blank" rel="noopener">Cognivideo</a>
             </div>
           </article>
@@ -94,7 +114,7 @@
           </article>
           <article class="card card-span-two">
             <h3>Implementation contributors</h3>
-            <p><strong>Current:</strong> Rusty Haner, August White, Shelbi Kuhlmann (adaptive video collaborator; skinned MoFaCTS deployment via <a href="https://cognivideo.org" target="_blank" rel="noopener">Cognivideo</a>).</p>
+            <p><strong>Contributors:</strong> Rusty Haner, August White, Shelbi Kuhlmann (adaptive video collaborator; skinned MoFaCTS deployment via <a href="https://cognivideo.org" target="_blank" rel="noopener">Cognivideo</a>).</p>
             <p><strong>Earlier:</strong> Andrew Tackett, Craig Kelly, Nicholas Gordon, Justin Hiller, Edward Prins III, Wes Carter, James Antoine, Ian Burns, Kenneth Brown, Andrew DiMotta, Karlos Abel, Genc Doko, Lili Wu, Giancarlo Dozzi.</p>
           </article>
         </div>
@@ -122,13 +142,13 @@
       <section class="page-section" id="lkt" aria-labelledby="lkt-title">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">Core Tool 2</span>
+            <span class="section-kicker">Learner modeling</span>
             <h2 id="lkt-title">LKT</h2>
           </div>        </div>
         <div class="card-grid two-up">
           <article class="card">
             <h3>What it does</h3>
-            <p>The LKT package supports modeling and analysis workflows connected to the lab's work on knowledge tracing, learner history features, and interpretable predictive models for educational data.</p>
+            <p>Logistic Knowledge Tracing (LKT) is an R package for building and comparing interpretable models of learner performance. Researchers can combine features of practice history, success, failure, and timing to test theories and predict subsequent performance. Install LKT from CRAN and explore the tutorial to use it with your own data. MoFaCTS users are invited to explore LKT for learner modeling and analysis of practice histories.</p>
             <div class="person-links">
               <a href="https://cran.r-project.org/web/packages/LKT/index.html" target="_blank" rel="noopener">LKT on CRAN</a>
               <a href="https://github.com/Optimal-Learning-Lab/LKT" target="_blank" rel="noopener">LKT on GitHub</a>
@@ -162,6 +182,18 @@
         </article>
       </section>
 
+
+      <section class="page-section" aria-labelledby="sparc-project">
+        <div class="section-heading"><div><span class="section-kicker">New research innovation</span><h2 id="sparc-project">TutorScript and SPARC</h2></div></div>
+        <div class="split-panel"><article class="card"><h3>What it does</h3>
+          <p>SPARC (Semantic Pages with Adaptive Rules and Cognition) is an emerging tutoring system within MoFaCTS. TutorScript is its language for expressing explicit instructional rules; the two names refer to the system and its rule language, respectively.</p>
+          <p>Learner models estimate knowledge from response evidence. TutorScript rules specify which instructional actions are eligible and how an action is selected. Generative AI then realizes the selected action as an explanation, worked example, teaching figure, or question. Separating instructional choice from language generation makes the choices available for inspection and experimental study.</p>
+          <div class="person-links"><a href="wiki/Introduction-to-TutorScript.html">Explore TutorScript</a><a href="wiki/images/workflows/tutorscript-instructional-cycle.svg">Instructional-cycle infographic</a></div>
+        </article><article class="quote-panel"><h3>Research and availability</h3>
+          <p>Current research implementations support both rule-guided agent selection and student choice among instructional moves. Local browser acceptance checks have exercised these paths and saved decision histories.</p>
+          <p>These observations establish research capabilities in controlled deployments. The newer dynamic instruction policies remain restricted to administrator research use; they are not a general public feature. The wiki describes the current scope and technical details.</p>
+        </article></div>
+      </section>
     </main>
 
     <footer class="site-footer">

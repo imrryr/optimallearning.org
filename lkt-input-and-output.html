@@ -7,7 +7,7 @@
   <meta name="description" content="Reference guide to important LKT input parameters and output values.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
   <link rel="stylesheet" href="_frame/site-refresh.css">
   <link rel="icon" href="_frame/favicon-network.svg?v=3" type="image/svg+xml">
   <meta property="og:title" content="LKT Input and Output | Optimal Learning Lab">
@@ -71,14 +71,14 @@
         <div class="section-heading">
           <div>
             <span class="section-kicker">Inputs</span>
-            <h2 id="lkt-inputs">Common input parameters</h2>
+            <h2 id="lkt-inputs">Common input parameters</h2><p>These names follow the <a href="https://cran.r-project.org/web/packages/LKT/refman/LKT.html#LKT" target="_blank" rel="noopener">LKT 1.7.0 reference manual</a>, checked October 13, 2026. Consult the manual for complete arguments and version-specific behavior.</p>
           </div>
         </div>
         <div class="card-grid two-up">
           <article class="card">
             <h3>Data and structure</h3>
             <ul class="simple-list">
-              <li><code>data</code>: dataset containing student and outcome information</li>
+              <li><code>data</code>: dataset with <code>Anon.Student.Id</code> and <code>CF..ansbin.</code> columns</li>
               <li><code>components</code>: factors used to compute features per subject</li>
               <li><code>features</code>: methods used to compute those features</li>
               <li><code>curvefeats</code>: columns used with difference-style functions</li>
@@ -88,7 +88,7 @@
           <article class="card">
             <h3>Fitting and optimization</h3>
             <ul class="simple-list">
-              <li><code>usefolds</code>: folds used for model fitting</li>
+              <li><code>usefolds</code>: folds selected for fitting; features are calculated across all folds</li>
               <li><code>fixedpars</code> and <code>seedpars</code>: parameter vectors used in fitting and initialization</li>
               <li><code>epsilon</code>, <code>cost</code>, <code>type</code>, <code>bias</code>: solver-related settings</li>
               <li><code>lowb</code>, <code>highb</code>, <code>maxitv</code>, <code>factrv</code>: optimization controls</li>
@@ -119,11 +119,11 @@
           <article class="card">
             <h3>Predictions and derived outputs</h3>
             <ul class="simple-list">
-              <li><code>prediction</code>: predicted probabilities or outcomes</li>
+              <li><code>prediction</code>: model predictions</li>
               <li><code>latencymodel</code>: latency-related model if dual fitting is enabled</li>
-              <li><code>studentRMSE</code>: per-student prediction error summary</li>
+              <li><code>subjectrmse</code>: per-student prediction error summary</li>
               <li><code>newdata</code>: transformed or feature-enriched data</li>
-              <li><code>automat</code>: record of automatic transformations or feature engineering</li>
+              <li><code>automat</code>: an additional returned object listed in the manual; its interpretation depends on the model configuration</li>
             </ul>
           </article>
         </div>
