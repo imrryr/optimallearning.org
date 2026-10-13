@@ -301,8 +301,3 @@ Recommendation:
 - [x] Site search should be removed by default
 - [x] Historical pages should be archived only if they retain scholarly or reference value
 - [x] Existing URLs should be preserved for retained pages, with redirects for merged or removed pages
-
-
-
-
-
