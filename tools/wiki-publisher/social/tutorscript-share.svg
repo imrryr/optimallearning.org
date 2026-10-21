@@ -12,7 +12,7 @@
     <text x="33" y="166" font-size="70" font-weight="700" letter-spacing="-2.5" fill="#102349">TutorScript</text>
     <g font-size="36" font-weight="500" fill="#343342">
       <text x="38" y="249">Explicit teaching</text><text x="38" y="292">decisions.</text>
-      <text x="38" y="359">AI-generated</text><text x="38" y="402">instruction.</text>
+      <text x="38" y="359" font-size="28">Hamiltonian KC paths.</text><text x="38" y="402" font-size="28">Boltzmann move selection.</text>
     </g>
     <path d="M38 467h350" stroke="#cbbdd8" stroke-width="2"/>
     <text x="38" y="514" font-size="27" font-weight="650" fill="#102349">MoFaCTS</text>
@@ -37,7 +37,7 @@
       <text x="597" y="270">4 · Assess and</text><text x="597" y="306">give feedback</text>
     </g>
     <g fill="#343342" font-size="24" text-anchor="middle">
-      <text x="826" y="113">KC path, then choose</text><text x="826" y="146">a teaching move</text>
+      <text x="826" y="113">Hamiltonian KC path</text><text x="826" y="146">then choose the move</text>
       <text x="1057" y="351">Explanation and</text><text x="1057" y="385">optional support</text>
       <text x="826" y="551">Four response</text><text x="826" y="584">formats</text>
       <text x="597" y="351">Update evidence;</text><text x="597" y="385">continue or stop</text>

@@ -5,7 +5,7 @@
   },
   "Introduction-to-TutorScript.md": {
     "title": "TutorScript: agentic tutoring guided by learning science",
-    "description": "How MoFaCTS combines explicit teaching rules, learner models, student choice, and AI-generated instruction—with a visual cycle and annotated examples.",
+    "description": "How TutorScript combines maximum-relationship Hamiltonian KC paths, Boltzmann move selection, student choice, and AI-generated instruction—with three complete examples.",
     "image": {
       "file": "tutorscript-share.png",
       "alt": "TutorScript instructional cycle: select a KC and teaching move through a learner model or student choice, present instruction, collect the learner response, and assess with feedback."
