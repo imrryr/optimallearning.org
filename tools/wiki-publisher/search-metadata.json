@@ -8,7 +8,7 @@
     "description": "How MoFaCTS combines explicit teaching rules, learner models, student choice, and AI-generated instruction—with a visual cycle and annotated examples.",
     "image": {
       "file": "tutorscript-share.png",
-      "alt": "TutorScript instructional cycle: evaluate student understanding, select a production through a learner model or student choice, generate instruction, and collect the student's next response."
+      "alt": "TutorScript instructional cycle: select a KC and teaching move through a learner model or student choice, present instruction, collect the learner response, and assess with feedback."
     }
   },
   "AutoTutor-Prompt-Production-Rule.md": {
